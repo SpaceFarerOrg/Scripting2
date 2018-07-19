@@ -7,6 +7,7 @@
 #include <vector>
 #include "Checkpoint.h"
 #include "SFML/System/Clock.hpp"
+#include "Goal.h"
 
 #pragma comment(lib, "../bin/lib/Script")
 
@@ -27,6 +28,9 @@ public:
 	static int DrawLine(lua_State* aLuaState);
 	static int DrawText(lua_State* aLuaState);
 	static int AddCheckpoint(lua_State* aLuaState);
+	static int RegisterTriggerCallback(lua_State* aLuaState);
+	static int SetGoalPosition(lua_State* aLuaState);
+
 	void RegisterExternalFunctions();
 private:
 	sf::Clock myDeltaTimer;
@@ -36,7 +40,9 @@ private:
 	static int DrawTextInternal(lua_State* aLuaState);
 	static int AddCheckpointInternal(lua_State* aLuaState);
 
+
 	static std::vector<CCheckpoint> myCheckpoints;
+	static CGoal myGoal;
 
 	bool& myShouldRun;
 	sf::RenderWindow* myWindow;

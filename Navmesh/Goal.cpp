@@ -1,4 +1,12 @@
 #include "Goal.h"
+#include "../Script/ScriptManager.h"
+
+
+void CGoal::SetTriggerCallback(sf::String & aCallbackName, int aCallbackId)
+{
+	myCallbackName = aCallbackName;
+	myCallbackId = aCallbackId;
+}
 
 void CGoal::Init()
 {
@@ -30,4 +38,9 @@ void CGoal::Render(sf::RenderWindow & aWindow)
 
 	aWindow.draw(mySprite);
 
+}
+
+void CGoal::RunLuaCallback()
+{
+	CScriptManager::GetInstance().CallFunction(myCallbackName, &myCallbackId);
 }

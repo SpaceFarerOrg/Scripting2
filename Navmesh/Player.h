@@ -15,6 +15,8 @@ public:
 
 	void Init(const sf::Vector2f& aPos);void Update(float aDT);void Render(sf::RenderWindow* aRW);
 
+	const sf::FloatRect GetCollisionRect();
+
 private:
 	sf::Vector2f myPosition;
 	sf::Sprite mySprite;

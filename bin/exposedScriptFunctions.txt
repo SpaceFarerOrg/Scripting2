@@ -4,3 +4,5 @@ Print : Prints to console.
 DrawLine : Draws a line.
 DrawText : Draws text on screen.
 AddCheckpoint : Adds a checkpoint at position
+RegisterTriggerCallback : Registers a trigger callback
+SetGoalPosition : Sets goal position

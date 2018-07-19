@@ -20,3 +20,5 @@
 \.vs/Navmesh/v15/Solution\.VC\.db-wal
 
 *.db-shm
+
+*.ipch
