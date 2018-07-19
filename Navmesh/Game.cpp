@@ -41,6 +41,7 @@ void CGame::Init()
 	myWonGame = false;
 }
 
+#include <SFML\Window\Event.hpp>
 void CGame::Update()
 {
 	if (myWonGame)
@@ -52,6 +53,18 @@ void CGame::Update()
 	//CScriptManager::GetInstance().CallFunction("Update");
 	CScriptManager::GetInstance().Update();
 	myPlayer.Update(dt);
+
+
+	sf::Event e;
+
+	while (myWindow->pollEvent(e))
+	{
+		if (e.type == sf::Event::Closed)
+		{
+			myShouldRun = false;
+		}
+	}
+
 }
 
 void CGame::Render()

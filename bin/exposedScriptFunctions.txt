@@ -8,3 +8,4 @@ RegisterTriggerCallback : Registers a trigger callback
 SetGoalPosition : Sets goal position
 UnregisterTriggerCallback : Unregisters a callback
 UnlockGoal : Unlocks the goal
+Win : Wins the game
