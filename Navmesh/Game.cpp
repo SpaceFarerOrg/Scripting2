@@ -108,6 +108,32 @@ int CGame::SetGoalPosition(lua_State* aLuaState)
 	return 0;
 }
 
+int CGame::UnregisterCallback(lua_State * aLuaState)
+{
+	int index = lua_tonumber(aLuaState, 1);
+	index--;
+
+	if (index == -1)
+	{
+		myGoal.Unregister();
+		return 0;
+	}
+	
+	myCheckpoints[index].Unregister();
+
+}
+
+int CGame::UnlockGoal(lua_State* aLuaState)
+{
+	myGoal.Unlock();
+	return 0;
+}
+
+int CGame::Win(lua_State* aLuaState)
+{
+	//FILL ME IN JOKNOM
+}
+
 void CGame::RegisterExternalFunctions()
 {
 	CScriptManager& SM = CScriptManager::GetInstance();
@@ -117,6 +143,9 @@ void CGame::RegisterExternalFunctions()
 	SM.RegisterFunction("AddCheckpoint", AddCheckpoint, "Adds a checkpoint at position");
 	SM.RegisterFunction("RegisterTriggerCallback", RegisterTriggerCallback, "Registers a trigger callback");
 	SM.RegisterFunction("SetGoalPosition", SetGoalPosition, "Sets goal position");
+	SM.RegisterFunction("UnregisterTriggerCallback", UnregisterCallback, "Unregisters a callback");
+	SM.RegisterFunction("UnlockGoal", UnlockGoal, "Unlocks the goal");
+	SM.RegisterFunction("Win", Win, "Wins the game");
 }
 
 int CGame::PrintInternal(lua_State * aLuaState)

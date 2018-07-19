@@ -77,7 +77,7 @@ int CScriptManager::GetFunction(const std::string & aFunctionName)
 	int result = lua_getglobal(myLuaState, aFunctionName.c_str());
 	if (result != 0)
 	{
-		std::cout << lua_tostring(myLuaState, -1);
+		//std::cout << lua_tostring(myLuaState, -1);
 	}
 	return result;
 }

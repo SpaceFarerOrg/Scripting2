@@ -13,6 +13,8 @@ public:
 
 	void RunPlayerVsCheckpointCollision(const sf::FloatRect& aPlayerCollision);
 
+	void Unregister() { myHasCallback = false; }
+
 	void Render(sf::RenderWindow& aWindow);
 private:
 	void RunLuaCallback();
@@ -24,6 +26,8 @@ private:
 
 	sf::String myCallbackName;
 
+
+	bool myHasCallback;
 	sf::Color myRenderColor;
 	int myCallbackId;
 };

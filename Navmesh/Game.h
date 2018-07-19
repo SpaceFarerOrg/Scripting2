@@ -30,6 +30,9 @@ public:
 	static int AddCheckpoint(lua_State* aLuaState);
 	static int RegisterTriggerCallback(lua_State* aLuaState);
 	static int SetGoalPosition(lua_State* aLuaState);
+	static int UnregisterCallback(lua_State* aLuaState);
+	static int UnlockGoal(lua_State* aLuaState);
+	static int Win(lua_State* aLuaState);
 
 	void RegisterExternalFunctions();
 private:

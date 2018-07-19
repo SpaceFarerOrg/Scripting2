@@ -31,15 +31,15 @@ function Init()
 end
 
 function OnEnter(id)
---	ranThroughCPs++
---	
---	if(amountOfCPs == ranThroughCPs)
---		UnlockGoal();
---	end
---	
---	if(id == goalId)
---		Win()
---	end
---	
---	UnregisterTriggerCallback(id)
+	ranThroughCPs = ranThroughCPs + 1
+	
+	if(amountOfCPs == ranThroughCPs) then
+		UnlockGoal();
+	end
+	
+	if(id == goalId) then
+		Win()
+	end
+	
+	UnregisterTriggerCallback(id)
 end

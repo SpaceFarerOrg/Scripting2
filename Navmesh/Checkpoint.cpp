@@ -6,6 +6,7 @@ void CCheckpoint::SetTriggerCallback(sf::String & aCallbackName, int aCallbackId
 {
 	myCallbackName = aCallbackName;
 	myCallbackId = aCallbackId;
+	myHasCallback = true;
 }
 
 void CCheckpoint::Create(const sf::Vector2f & aPosition)
@@ -16,6 +17,7 @@ void CCheckpoint::Create(const sf::Vector2f & aPosition)
 	mySprite.setTexture(myTexture);
 	mySprite.setPosition(myPosition);
 	myRenderColor = sf::Color::White;
+	myHasCallback = false;
 }
 
 void CCheckpoint::RunPlayerVsCheckpointCollision(const sf::FloatRect & aPlayerCollision)
@@ -34,6 +36,11 @@ void CCheckpoint::Render(sf::RenderWindow& aWindow)
 
 void CCheckpoint::RunLuaCallback()
 {
+	if (myHasCallback == false)
+	{
+		return;
+	}
+
 	myRenderColor = sf::Color::Green;
 	CScriptManager::GetInstance().CallFunction(myCallbackName, &myCallbackId);
 }
