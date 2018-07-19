@@ -45,9 +45,11 @@ void CScriptManager::Update()
 
 bool CScriptManager::UseScript(const std::string & aPath)
 {
-	if (luaL_dofile(myLuaState, aPath.c_str()) != 0)
+	if (int fel = luaL_dofile(myLuaState, aPath.c_str()) != 0)
 	{
 		std::cout << "Could not open file " << aPath << std::endl;
+		std::cout << lua_tostring(myLuaState, -1);
+
 		return false;
 	}//Failcheck this. If file is not found go into "fix" state
 
