@@ -23,6 +23,8 @@ CGame::CGame(bool & aIsRunning)
 
 void CGame::Init()
 {
+	myCheckpoints.reserve(100);
+	
 	CDebugDrawer::GetInstance().Init(*myWindow);
 	CScriptManager::GetInstance().Init();
 	CScriptManager::GetInstance().UseScript("script\\script.lua");
