@@ -35,5 +35,5 @@ void CCheckpoint::Render(sf::RenderWindow& aWindow)
 void CCheckpoint::RunLuaCallback()
 {
 	myRenderColor = sf::Color::Green;
-	//CScriptManager::GetInstance().CallFunction(myCallbackName, &myCallbackId);
+	CScriptManager::GetInstance().CallFunction(myCallbackName, &myCallbackId);
 }

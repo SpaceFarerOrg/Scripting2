@@ -67,5 +67,5 @@ inline void CScriptManager::CallFunction(const std::string & aFunctionName, argO
 		std::cout << lua_tostring(myLuaState, -1) << std::endl;
 		//system("pause");
 	}
-	lua_pop(myLuaState, argCount + 1);
+	lua_pop(myLuaState, argCount);
 }
