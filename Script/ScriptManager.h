@@ -24,7 +24,7 @@ public:
 	void Update();
 
 	template <typename argOne = void*, typename argTwo = void*, typename argThree = void*>
-	void CallFunction(const std::string& aFunctionName, argOne = nullptr, argTwo = nullptr, argThree = nullptr);
+	void CallFunction(const std::string& aFunctionName, argOne* = nullptr, argTwo* = nullptr, argThree* = nullptr);
 	bool UseScript(const std::string& aPath);
 
 private:
@@ -32,10 +32,12 @@ private:
 	~CScriptManager();
 
 	int GetFunction(const std::string& aFunctionName);
-	template <typename T>
-	int EvaluateAndPushValueToLua(T aT);
+	int EvaluateAndPushValueToLua(float* aFloat);
+	int EvaluateAndPushValueToLua(int* aInt);
+	int EvaluateAndPushValueToLua(const char* aString);
+	int EvaluateAndPushValueToLua(bool* aBool);
+	int EvaluateAndPushValueToLua(void** aNothing);
 
-	void CallFunctionInternal(const std::string& aFunctionName);
 	
 	std::string myFilePath;
 
@@ -46,28 +48,24 @@ private:
 
 
 template<typename argOne, typename argTwo, typename argThree>
-inline void CScriptManager::CallFunction(const std::string & aFunctionName, argOne a1, argTwo a2, argThree a3)
+inline void CScriptManager::CallFunction(const std::string & aFunctionName, argOne* a1, argTwo* a2, argThree* a3)
 {
-	CallFunctionInternal(aFunctionName);
-}
+	if (GetFunction(aFunctionName) != LUA_TFUNCTION)
+	{
+		std::cout << "Error in function " << aFunctionName << ", check spelling?" << std::endl;
+		system("pause");
+		return;
+	}
 
-template<typename T>
-inline int CScriptManager::EvaluateAndPushValueToLua(T aT)
-{
-	if (aT == nullptr)
-		return 0;
+	int argCount = 0;
+	argCount += EvaluateAndPushValueToLua(a1);
+	argCount += EvaluateAndPushValueToLua(a2);
+	argCount += EvaluateAndPushValueToLua(a3);
 
-	if (typeid(T) == typeid(float) || typeid(T) == typeid(int))
+	if (lua_pcall(myLuaState, argCount, 1, 0) != 0)
 	{
-		lua_pushnumber(myLuaState, *reinterpret_cast<float*>(aT));
+		std::cout << lua_tostring(myLuaState, -1) << std::endl;
+		//system("pause");
 	}
-	else if (typeid(T) == typeid(std::string))
-	{
-		lua_pushstring(myLuaState, (*reinterpret_cast<std::string*>(aT)).c_str());
-	}
-	else if (typeid(T) == typeid(bool))
-	{
-		lua_pushboolean(myLuaState, *reinterpret_cast<bool*>(aT));
-	}
-	return 1;
+	lua_pop(myLuaState, argCount + 1);
 }

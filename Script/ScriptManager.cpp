@@ -76,24 +76,45 @@ int CScriptManager::GetFunction(const std::string & aFunctionName)
 	return result;
 }
 
-void CScriptManager::CallFunctionInternal(const std::string & aFunctionName)
+
+
+int CScriptManager::EvaluateAndPushValueToLua(float* aFloat)
 {
-	if (GetFunction(aFunctionName) != LUA_TFUNCTION)
-	{
-		std::cout << "Error in function " << aFunctionName << ", check spelling?" << std::endl;
-		system("pause");
-		return;
-	}
+	if (aFloat == nullptr)
+		return 0;
 
-	int argCount = 0;
-	//argCount += EvaluateAndPushValueToLua(a1);
-	//argCount += EvaluateAndPushValueToLua(a2);
-	//argCount += EvaluateAndPushValueToLua(a3);
+	lua_pushnumber(myLuaState, *aFloat);
+	return 1;
+}
 
-	if (lua_pcall(myLuaState, argCount, 1, 0) != 0)
-	{
-		std::cout << lua_tostring(myLuaState, -1) << std::endl;
-		//system("pause");
-	}
-	lua_pop(myLuaState, argCount + 1);
+int CScriptManager::EvaluateAndPushValueToLua(int* aInt)
+{
+	if (aInt == nullptr)
+		return 0;
+
+	lua_pushnumber(myLuaState, *aInt);
+	return 1;
+}
+
+int CScriptManager::EvaluateAndPushValueToLua(const char* aString)
+{
+	if (aString == nullptr)
+		return 0;
+
+	lua_pushstring(myLuaState, aString);
+	return 1;
+}
+
+int CScriptManager::EvaluateAndPushValueToLua(bool* aBool)
+{
+	if (aBool == nullptr)
+		return 0;
+
+	lua_pushboolean(myLuaState, *aBool);
+	return 1;
+}
+
+int CScriptManager::EvaluateAndPushValueToLua(void** aNothing)
+{
+	return 0;
 }
