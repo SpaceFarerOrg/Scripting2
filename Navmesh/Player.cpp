@@ -17,6 +17,7 @@ void CPlayer::Init(const sf::Vector2f & aPos)
 	myTexture.loadFromFile("sprites/playerCar.png");
 	mySprite.setTexture(myTexture);
 	mySprite.setOrigin(mySprite.getGlobalBounds().width * .5f, mySprite.getGlobalBounds().height / 2.f);
+	mySprite.setPosition(myPosition);
 	mySpeed = 0.f;
 }
 
@@ -52,4 +53,11 @@ void CPlayer::Render(sf::RenderWindow * aRW)
 	mySprite.setRotation(myRotation * (180.f / 3.14f));
 
 	aRW->draw(mySprite);
+}
+
+const sf::FloatRect CPlayer::GetCollisionRect()
+{
+	sf::FloatRect collisionRect = mySprite.getGlobalBounds();
+
+	return collisionRect;
 }

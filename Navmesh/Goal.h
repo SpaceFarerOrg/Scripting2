@@ -6,14 +6,18 @@
 class CGoal
 {
 public:
+	void SetTriggerCallback(sf::String& aCallbackName, int aCallbackId);
 	void Init();
 	void SetPosition(float aX, float aY);
 	void Unlock();
 	void Render(sf::RenderWindow& aWindow);
 private:
+	void RunLuaCallback();
 	sf::Texture myTexture;
 	sf::Sprite mySprite;
 
 	bool myIsLocked : 1;
 
+	sf::String myCallbackName;
+	int myCallbackId;
 };

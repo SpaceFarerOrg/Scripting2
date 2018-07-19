@@ -6,6 +6,7 @@
 #include "DebugDrawer.h"
 
 std::vector<CCheckpoint> CGame::myCheckpoints;
+CGoal CGame::myGoal;
 
 CGame::CGame(bool & aIsRunning)
 	:myShouldRun(aIsRunning)
@@ -31,6 +32,7 @@ void CGame::Init()
 	RegisterExternalFunctions();
 	CScriptManager::GetInstance().CallFunction("Init");
 	myPlayer.Init({ 800, 450 });
+	myGoal.Init();
 }
 
 void CGame::Update()
@@ -53,7 +55,10 @@ void CGame::Render()
 	for (CCheckpoint& cp : myCheckpoints)
 	{
 		cp.Render(*myWindow);
+		cp.RunPlayerVsCheckpointCollision(myPlayer.GetCollisionRect());
 	}
+
+	myGoal.Render(*myWindow);
 
 	myWindow->display();
 }
@@ -83,6 +88,26 @@ int CGame::AddCheckpoint(lua_State* aLuaState)
 	return 0;
 }
 
+int CGame::RegisterTriggerCallback(lua_State* aLuaState)
+{
+	std::string callbackLuaFunc = lua_tostring(aLuaState, 1);
+	int callbackId = lua_tonumber(aLuaState, 2);
+
+	if (myCheckpoints.size() == 0)
+	{
+		myGoal.SetTriggerCallback(sf::String(callbackLuaFunc), callbackId);
+		return 0;
+	}
+
+	myCheckpoints.back().SetTriggerCallback(sf::String(callbackLuaFunc), callbackId);
+}
+
+int CGame::SetGoalPosition(lua_State* aLuaState)
+{
+	myGoal.SetPosition(lua_tonumber(aLuaState, 1), lua_tonumber(aLuaState, 2));
+	return 0;
+}
+
 void CGame::RegisterExternalFunctions()
 {
 	CScriptManager& SM = CScriptManager::GetInstance();
@@ -90,6 +115,8 @@ void CGame::RegisterExternalFunctions()
 	SM.RegisterFunction("DrawLine", DrawLine, "Draws a line.");
 	SM.RegisterFunction("DrawText", DrawText, "Draws text on screen.");
 	SM.RegisterFunction("AddCheckpoint", AddCheckpoint, "Adds a checkpoint at position");
+	SM.RegisterFunction("RegisterTriggerCallback", RegisterTriggerCallback, "Registers a trigger callback");
+	SM.RegisterFunction("SetGoalPosition", SetGoalPosition, "Sets goal position");
 }
 
 int CGame::PrintInternal(lua_State * aLuaState)

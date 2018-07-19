@@ -21,7 +21,7 @@ function Init()
 	AddCheckpoint(600,10)
 	RegisterTriggerCallback("OnEnter", 2)
 	
-	AddCheckpoint(600,10)
+	AddCheckpoint(10,600)
 	RegisterTriggerCallback("OnEnter", 3)
 	
 	AddCheckpoint(600,600)
@@ -31,15 +31,15 @@ function Init()
 end
 
 function OnEnter(id)
-	ranThroughCPs++
-	
-	if(amountOfCPs == ranThroughCPs)
-		UnlockGoal();
-	end
-	
-	if(id == goalId)
-		Win()
-	end
-	
-	UnregisterTriggerCallback(id)
+--	ranThroughCPs++
+--	
+--	if(amountOfCPs == ranThroughCPs)
+--		UnlockGoal();
+--	end
+--	
+--	if(id == goalId)
+--		Win()
+--	end
+--	
+--	UnregisterTriggerCallback(id)
 end
