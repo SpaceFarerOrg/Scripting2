@@ -51,4 +51,7 @@ private:
 	sf::RenderWindow* myWindow;
 	CLineDrawer myLineDrawer;
 	CPlayer myPlayer;
+	static bool myWonGame;
+	sf::Texture myWonGameTexture;
+	sf::Sprite myWonGameSprite;
 };

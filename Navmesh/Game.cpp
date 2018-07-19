@@ -7,6 +7,7 @@
 
 std::vector<CCheckpoint> CGame::myCheckpoints;
 CGoal CGame::myGoal;
+bool CGame::myWonGame;
 
 CGame::CGame(bool & aIsRunning)
 	:myShouldRun(aIsRunning)
@@ -26,17 +27,25 @@ void CGame::Init()
 {
 	myCheckpoints.reserve(100);
 	
+	myGoal.Init();
 	CDebugDrawer::GetInstance().Init(*myWindow);
 	CScriptManager::GetInstance().Init();
 	CScriptManager::GetInstance().UseScript("script\\script.lua");
 	RegisterExternalFunctions();
 	CScriptManager::GetInstance().CallFunction("Init");
 	myPlayer.Init({ 800, 450 });
-	myGoal.Init();
+
+	myWonGameTexture.loadFromFile("sprites/win.png");
+	myWonGameSprite.setTexture(myWonGameTexture);
+	myWonGameSprite.setPosition(800 - 360, 450 - 256);
+	myWonGame = false;
 }
 
 void CGame::Update()
 {
+	if (myWonGame)
+		return;
+
 	float dt = myDeltaTimer.getElapsedTime().asSeconds();
 	myDeltaTimer.restart();
 
@@ -56,9 +65,15 @@ void CGame::Render()
 	{
 		cp.Render(*myWindow);
 		cp.RunPlayerVsCheckpointCollision(myPlayer.GetCollisionRect());
+		myGoal.CheckPlayerVsGoalCollision(myPlayer.GetCollisionRect());
 	}
 
 	myGoal.Render(*myWindow);
+
+	if (myWonGame)
+	{
+		myWindow->draw(myWonGameSprite);
+	}
 
 	myWindow->display();
 }
@@ -131,7 +146,7 @@ int CGame::UnlockGoal(lua_State* aLuaState)
 
 int CGame::Win(lua_State* aLuaState)
 {
-	//FILL ME IN JOKNOM
+	myWonGame = true;
 
 	return 0;
 }
