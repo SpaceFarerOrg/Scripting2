@@ -5,6 +5,11 @@ function Update()
 	--DrawText("Hello", 762, 431)
 end
 
+function Init()
+	AddCheckpoint(10,10)
+	AddCheckpoint(100,100)
+end
+
 function OnEnter()
 	Print("Aj D:")
 end

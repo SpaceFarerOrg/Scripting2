@@ -27,6 +27,7 @@ void CGame::Init()
 	CScriptManager::GetInstance().Init();
 	CScriptManager::GetInstance().UseScript("script\\script.lua");
 	RegisterExternalFunctions();
+	CScriptManager::GetInstance().CallFunction("Init");
 	myPlayer.Init({ 800, 450 });
 }
 
@@ -86,6 +87,7 @@ void CGame::RegisterExternalFunctions()
 	SM.RegisterFunction("Print", Print, "Prints to console.");
 	SM.RegisterFunction("DrawLine", DrawLine, "Draws a line.");
 	SM.RegisterFunction("DrawText", DrawText, "Draws text on screen.");
+	SM.RegisterFunction("AddCheckpoint", AddCheckpoint, "Adds a checkpoint at position");
 }
 
 int CGame::PrintInternal(lua_State * aLuaState)
