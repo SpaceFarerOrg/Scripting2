@@ -125,6 +125,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Checkpoint.cpp" />
     <ClCompile Include="DebugDrawer.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="LineDrawer.cpp" />
@@ -135,6 +136,7 @@
     <ClCompile Include="TextDrawer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Checkpoint.h" />
     <ClInclude Include="DebugDrawer.h" />
     <ClInclude Include="Edge.h" />
     <ClInclude Include="Game.h" />
