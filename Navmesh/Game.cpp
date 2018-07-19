@@ -132,6 +132,8 @@ int CGame::UnlockGoal(lua_State* aLuaState)
 int CGame::Win(lua_State* aLuaState)
 {
 	//FILL ME IN JOKNOM
+
+	return 0;
 }
 
 void CGame::RegisterExternalFunctions()
