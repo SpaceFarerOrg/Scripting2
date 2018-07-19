@@ -1,0 +1,5 @@
+Exposed Functions:
+
+Print : Prints to console.
+DrawLine : Draws a line.
+DrawText : Draws text on screen.
