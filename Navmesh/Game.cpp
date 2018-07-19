@@ -44,6 +44,16 @@ void CGame::Init()
 #include <SFML\Window\Event.hpp>
 void CGame::Update()
 {
+	sf::Event e;
+
+	while (myWindow->pollEvent(e))
+	{
+		if (e.type == sf::Event::Closed)
+		{
+			myShouldRun = false;
+		}
+	}
+	
 	if (myWonGame)
 		return;
 
@@ -55,15 +65,6 @@ void CGame::Update()
 	myPlayer.Update(dt);
 
 
-	sf::Event e;
-
-	while (myWindow->pollEvent(e))
-	{
-		if (e.type == sf::Event::Closed)
-		{
-			myShouldRun = false;
-		}
-	}
 
 }
 
